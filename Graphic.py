@@ -16,12 +16,6 @@ for i in range(9):
     turtle.down()
     turtle.goto(GRID_SIZE * 4, (i - 4) * GRID_SIZE)
     turtle.up()
-for i in range(8):
-    for j in range(8):
-        turtle.goto((i - 3.5) * GRID_SIZE, (j - 3.5) * GRID_SIZE)
-        if (i + j) % 2 == 0:
-            turtle.dot(STONE_SIZE, 'red')
-        else:
-            turtle.dot(STONE_SIZE, 'blue')
-
-input()
+def drawStone(x, y, color):
+    turtle.goto((x - 3.5) * GRID_SIZE, (y - 3.5) * GRID_SIZE)
+    turtle.dot(STONE_SIZE, color)
