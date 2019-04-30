@@ -1,14 +1,27 @@
 import tensorflow as tf
 
-x = tf.placeholder(tf.float32)
-#y = tf.placeholder(tf.float32)
+x = tf.placeholder(tf.float32, [1, 64])
 
-w1 = tf.Variable(tf.random_uniform([64, 1], 0.0, 1.0))
-b1 = tf.Variable(tf.zeros([64, 1]))
+w = tf.Variable(tf.random_uniform([64, 1], 0.0, 1.0))
 
-h = tf.matmul(tf.add(x, b1), w1)
-h = tf.nn.relu(h)
+h = tf.matmul(x, w)
 
-sess = tf.Session()
-res = sess.run(h, feed_dict={x: tf.random_uniform([64, 1], 0.0, 1.0)})
-print(res)
+
+def run(gameBoard):
+    tensor = []
+    for i in gameBoard:
+        tensor.extend(i)
+    sess = tf.Session()
+    sess.run(tf.global_variables_initializer())
+    res = sess.run(h, feed_dict={x: [tensor]})
+    return res[0][0]
+
+
+print(run([[0, 0, 0, 0, 0, 0, 0, 0],
+     [0, 0, 0, 0, 0, 0, 0, 0],
+     [0, 0, 0, 0, 0, 0, 0, 0],
+     [0, 0, 0, 1, -1, 0, 0, 0],
+     [0, 0, 0, -1, 1, 0, 0, 0],
+     [0, 0, 0, 0, 0, 0, 0, 0],
+     [0, 0, 0, 0, 0, 0, 0, 0],
+     [0, 0, 0, 0, 0, 0, 0, 0]]))
