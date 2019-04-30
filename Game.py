@@ -9,6 +9,8 @@ class Game:
         self.gameBoard[3][4] = self.gameBoard[4][3] = -1
 
     def checkFlippable(self, x, y, my):
+        if self.gameBoard[x][y] != 0:
+            return []
         flippable = []
         for d in DIRECTION:
             tx = x
@@ -26,6 +28,13 @@ class Game:
                     possible.append((tx, ty))
         return flippable
 
+    def getPlaceable(self, my):
+        flippable = []
+        for i in range(8):
+            for j in range(8):
+                if self.gameBoard[i][j] == 0 and len(self.checkFlippable(i, j, my)) > 0:
+                    flippable.append((i, j))
+        return flippable
+
 
 g = Game()
-print(g.checkFlippable(2, 3, -1))
