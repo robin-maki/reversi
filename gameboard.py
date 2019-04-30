@@ -1,12 +1,15 @@
 import pygame
+blockimage = pygame.image.load('pad.png')
 
 window_width = 512
 window_height = 512
 colour = (255,255,255)
-blockimage = pygame.image.load('images/pad.png')
+
+
 
 def rungame():
     global gamepad
+    global background
     global clock
     
     crashed = False
@@ -14,23 +17,21 @@ def rungame():
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 crashed = True
-        gamepad.fill(colour)
+        gamepad.blit(background,(0,0))
         pygame.display.update()
         clock.tick(30)
     pygame.quit()
 
-class gameblock :
-    global blockimage
-    block = 0
-    gamepad.bilt(blockimage(x,y))
+
     
     
 def initgame():
     global gamepad
-    global clock
+    global clock,background
     
     pygame.init()
     gamepad = pygame.display.set_mode((window_width,window_height))
+    background = pygame.image.load('pad1.png')
     
     pygame.display.set_caption('reversi')
     
