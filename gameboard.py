@@ -1,5 +1,6 @@
 import pygame
 import blockclass
+import search
 blockimage = pygame.image.load('pad.png')
 
 window_width = 512
@@ -23,26 +24,58 @@ def rungame():
     
     while not crashed:
         for event in pygame.event.get():
-            
+    
             if event.type == pygame.QUIT:
                 crashed = True
             if event.type == pygame.MOUSEBUTTONUP:
+        
                 if i%2 == 0 :
                     pos = pygame.mouse.get_pos()
                     clicked_x = pos[0]//64
                     clicked_y = pos[1]//64
-                    pos_x = blockclass.board[clicked_x][clicked_y].block_x
-                    pos_y = blockclass.board[clicked_x][clicked_y].block_y
-                    gamepad.blit(icon1,(pos_x,pos_y))
-                    i = i + 1
+                    count_up = search.upsearch(clicked_x,clicked_y,i)
+                    count_down = search.downsearch(clicked_x,clicked_y,i)
+            
+                    #print('잇는지',blockclass.board[clicked_x][clicked_y].blockstate == 0)
+                    #print('갯수',count_up)
+                    print('상태',blockclass.board[clicked_x][clicked_y].blockstate)
+                    print('칸수',clicked_x,clicked_y)
+                    
+                    if (bool(count_up) == True or bool(count_down)== True) and blockclass.board[clicked_x][clicked_y].blockstate == 0 :
+                        pos_x = blockclass.board[clicked_x][clicked_y].block_x
+                        pos_y = blockclass.board[clicked_x][clicked_y].block_y
+                        gamepad.blit(icon1,(pos_x,pos_y))
+                        
+                        if bool(count_up) == True :    
+                            blockclass.board[clicked_x][clicked_y].blockstate = -1
+                            for i in range(count_up):
+                                blockclass.board[clicked_x][clicked_y-(i+1)].blockstate = -1
+                                gamepad.blit(icon1,(blockclass.board[clicked_x][clicked_y-(i+1)].block_x,
+                                                blockclass.board[clicked_x][clicked_y-(i+1)].block_y))
+                        if bool(count_down) == True : 
+                            print(count_down)
+                            blockclass.board[clicked_x][clicked_y].blockstate = -1
+                            for i in range(count_down):
+                                blockclass.board[clicked_x][clicked_y+(i+1)].blockstate = -1
+                                gamepad.blit(icon1,(blockclass.board[clicked_x][clicked_y+(i+1)].block_x,
+                                                blockclass.board[clicked_x][clicked_y+(i+1)].block_y))
+                            
+                        i = i + 1
+                    
+                    else :
+                        print('byungshin')
                 elif i%2 == 1 :
                     pos = pygame.mouse.get_pos()
                     clicked_x = pos[0]//64
                     clicked_y = pos[1]//64
-                    pos_x = blockclass.board[clicked_x][clicked_y].block_x
-                    pos_y = blockclass.board[clicked_x][clicked_y].block_y
-                    gamepad.blit(icon2,(pos_x,pos_y))
-                    i = i + 1
+                    if blockclass.board[clicked_x][clicked_y].blockstate == 0 :
+                        pos_x = blockclass.board[clicked_x][clicked_y].block_x
+                        pos_y = blockclass.board[clicked_x][clicked_y].block_y
+                        gamepad.blit(icon2,(pos_x,pos_y))
+                        blockclass.board[clicked_x][clicked_y].blockstate = 1
+                        i = i + 1
+                    else :
+                        print('byungshin')
         
         pygame.display.update()
         clock.tick(30)
