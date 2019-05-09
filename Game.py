@@ -1,12 +1,17 @@
+import copy
+
 DIRECTION = ((-1, -1), (-1, 0), (-1, 1), (0, -1), (0, 1), (1, -1), (1, 0), (1, 1))
 
+
 class Game:
-    def __init__(self):
-        self.gameBoard = []
-        for i in range(8):
-            self.gameBoard.append([0, 0, 0, 0, 0, 0, 0, 0])
-        self.gameBoard[3][3] = self.gameBoard[4][4] = 1
-        self.gameBoard[3][4] = self.gameBoard[4][3] = -1
+    def __init__(self, gameBoard=None):
+        if gameBoard is None:
+            for i in range(8):
+                self.gameBoard.append([0, 0, 0, 0, 0, 0, 0, 0])
+            self.gameBoard[3][3] = self.gameBoard[4][4] = 1
+            self.gameBoard[3][4] = self.gameBoard[4][3] = -1
+        else:
+            self.gameBoard = copy.deepcopy(gameBoard)
 
     def checkFlippable(self, x, y, my):
         if self.gameBoard[x][y] != 0:
@@ -44,6 +49,11 @@ class Game:
             return toFlip
         else:
             raise ValueError('Invalid place')
+
+    def getPotentialBoard(self, x, y, my):
+        potentialGame = Game(self.gameBoard)
+        potentialGame.place(x, y, my)
+        return potentialGame.gameBoard
 
 
 g = Game()
