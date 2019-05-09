@@ -55,5 +55,3 @@ class Game:
         potentialGame.place(x, y, my)
         return potentialGame.gameBoard
 
-
-g = Game()
