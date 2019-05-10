@@ -6,6 +6,7 @@ DIRECTION = ((-1, -1), (-1, 0), (-1, 1), (0, -1), (0, 1), (1, -1), (1, 0), (1, 1
 class Game:
     def __init__(self, gameBoard=None):
         if gameBoard is None:
+            self.gameBoard = []
             for i in range(8):
                 self.gameBoard.append([0, 0, 0, 0, 0, 0, 0, 0])
             self.gameBoard[3][3] = self.gameBoard[4][4] = 1
