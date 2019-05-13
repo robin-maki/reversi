@@ -33,6 +33,8 @@ class NeuralNet:
 
     def predict(self, game, my):
         placeable = game.getPlaceable(my)
+        if len(placeable) == 0:
+            return -1
         potencialBoard = []
         for potencial in placeable:
             potencialBoard.append(game.getPotentialBoard(potencial[0], potencial[1], my))
