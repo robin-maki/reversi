@@ -9,8 +9,8 @@ class Game:
             self.gameBoard = []
             for i in range(8):
                 self.gameBoard.append([0, 0, 0, 0, 0, 0, 0, 0])
-            self.gameBoard[3][3] = self.gameBoard[4][4] = 1
-            self.gameBoard[3][4] = self.gameBoard[4][3] = -1
+            self.gameBoard[3][3] = self.gameBoard[4][4] = -1
+            self.gameBoard[3][4] = self.gameBoard[4][3] = 1
         else:
             self.gameBoard = copy.deepcopy(gameBoard)
 
@@ -45,10 +45,9 @@ class Game:
     def place(self, x, y, my):
         toFlip = self.checkFlippable(x, y, my)
         if len(toFlip) > 0:
-            self.gameBoard[x][y] = my
+            toFlip.append((x, y))
             for f in toFlip:
                 self.gameBoard[f[0]][f[1]] = my
-            self.gameBoard[x][y] = my
             return toFlip
         else:
             raise ValueError('Invalid place')
