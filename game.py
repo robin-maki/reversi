@@ -57,3 +57,13 @@ class Game:
         potentialGame.place(x, y, my)
         return potentialGame.gameBoard
 
+    def getScore(self):
+        score = [0, 0]
+        for i in range(8):
+            for j in range(8):
+                if self.gameBoard[i][j] == 1:
+                    score[0] += 1
+                elif self.gameBoard[i][j] == -1:
+                    score[1] += 1
+        return score
+
