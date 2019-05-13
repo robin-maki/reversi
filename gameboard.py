@@ -18,6 +18,7 @@ def rungame():
     gamepad.blit(background,(0,0))
     crashed = False
     i = 0
+    gamecontinue = True
     howmuch_block = 0
 
     gamepad.blit(icon1,(192,192))
@@ -65,6 +66,7 @@ def rungame():
                         #하우머치블록 64개이거나 곱하기0ㅇ일시 게임종료
                 if (available_player == 0 and available_com == 0) or howmuch_block == 64 :
                     gamepad.blit('gameover.png', (128,128))
+                    gamecontinue = False
 
         pygame.display.update()
         clock.tick(30)
