@@ -19,7 +19,6 @@ def rungame():
     crashed = False
     i = 0
     howmuch_block = 0
-    gamecontinue = True
 
     gamepad.blit(icon1,(192,192))
     gamepad.blit(icon1,(256,256))
