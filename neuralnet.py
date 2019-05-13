@@ -43,8 +43,7 @@ class NeuralNet:
             most = value.index(max(value))
         else:
             most = value.index(min(value))
-        print(value)
-        return most
+        return placeable[most]
 
 
 n = NeuralNet()
