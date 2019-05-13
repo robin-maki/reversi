@@ -13,13 +13,14 @@ game = Game.Game()
 
 def rungame():
     global gamepad
-    global background,icon1,icon2
+    global background,icon1,icon2,gameover #이미지
     global clock
     gamepad.blit(background,(0,0))
     crashed = False
     i = 0
     gamecontinue = True
     howmuch_block = 0
+    available_player,available_com = 1,1
 
     gamepad.blit(icon1,(192,192))
     gamepad.blit(icon1,(256,256))
@@ -35,7 +36,7 @@ def rungame():
                 pos = pygame.mouse.get_pos()
                 clix = pos[0]//64
                 cliy = pos[1]//64
-
+                print(clix,cliy)
                 if i%2 == 0 and gamecontinue :#사용자 턴
                     print(game.checkFlippable(clix, cliy, -1))
                     available_player = len(game.checkFlippable(clix, cliy, -1))
@@ -63,9 +64,10 @@ def rungame():
 
                         i = i + 1
 
-                        #하우머치블록 64개이거나 곱하기0ㅇ일시 게임종료
+                        #하우머치블록 64개이거나
+                print(available_com,available_player)        
                 if (available_player == 0 and available_com == 0) or howmuch_block == 64 :
-                    gamepad.blit('gameover.png', (128,128))
+                    gamepad.blit(gameover, (0,32))
                     gamecontinue = False
 
         pygame.display.update()
@@ -77,13 +79,14 @@ def rungame():
 
 def initgame():
     global gamepad
-    global clock,background,icon1,icon2
+    global clock,background,icon1,icon2,gameover
 
     pygame.init()
     gamepad = pygame.display.set_mode((window_width,window_height))
     background = pygame.image.load('pad1.png')
     icon1 = pygame.image.load('icon1.png')
     icon2 = pygame.image.load('icon2_2.png')
+    gameover = pygame.image.load('gameover.png')
 
     pygame.display.set_caption('reversi')
 
