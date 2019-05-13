@@ -38,6 +38,7 @@ def rungame():
 
                 if i%2 == 0 and gamecontinue :#사용자 턴
                     print(game.checkFlippable(clix, cliy, -1))
+                    available_player = len(game.checkFlippable(clix, cliy, -1))
                     if game.gameBoard[clix][cliy] == 0 and len(game.checkFlippable(clix, cliy, -1)) > 0:
                         toFlip_player = game.place(clix, cliy, -1)
                         if len(toFlip_player) > 0:
@@ -49,9 +50,10 @@ def rungame():
                         i = i + 1
 
                 elif i%2 == 1 and gamecontinue : # 컴퓨터 턴
-
+                    print(game.checkFlippable(clix, cliy, -1))
+                    available_com = len(game.checkFlippable(clix, cliy, -1))
                     if game.gameBoard[clix][cliy] == 0 and len(game.checkFlippable(clix,cliy, 1)) > 0:
-                        toFlip_com = game.place(clix, cliy, 1)
+                        toFlip_com = game.place(clix, cliy, -1)
                         if len(toFlip_com) > 0:
                             howmuch_block += 1
                             for f in toFlip_com:
@@ -62,9 +64,8 @@ def rungame():
                         i = i + 1
 
                         #하우머치블록 64개이거나 곱하기0ㅇ일시 게임종료
-                if (len(toFlip_player) == 0 and len(toFlip_com) == 0) or howmuch_block == 64 :
-                    gamecontinew = False
-                    gamepad.blit(text, text.get_rect())
+                if (available_player == 0 and available_com == 0) or howmuch_block == 64 :
+                    gamepad.blit('gameover.png', (128,128))
 
         pygame.display.update()
         clock.tick(30)
@@ -87,8 +88,7 @@ def initgame():
 
     clock = pygame.time.Clock()
 
-    font = pygame.font.Font("freesansbold.ttf", 40)
-    text = font.render(u"안녕하세요", True, (255, 0, 0))
+   
 
 
 
