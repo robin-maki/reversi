@@ -9,8 +9,8 @@ class Game:
             self.gameBoard = []
             for i in range(8):
                 self.gameBoard.append([0, 0, 0, 0, 0, 0, 0, 0])
-            self.gameBoard[3][3] = self.gameBoard[4][4] = 1
-            self.gameBoard[3][4] = self.gameBoard[4][3] = -1
+            self.gameBoard[3][3] = self.gameBoard[4][4] = -1
+            self.gameBoard[3][4] = self.gameBoard[4][3] = 1
         else:
             self.gameBoard = copy.deepcopy(gameBoard)
 
@@ -56,4 +56,6 @@ class Game:
         potentialGame = Game(self.gameBoard)
         potentialGame.place(x, y, my)
         return potentialGame.gameBoard
+
+
 
