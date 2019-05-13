@@ -45,6 +45,7 @@ class Game:
     def place(self, x, y, my):
         toFlip = self.checkFlippable(x, y, my)
         if len(toFlip) > 0:
+            self.gameBoard[x][y] = my
             for f in toFlip:
                 self.gameBoard[f[0]][f[1]] = my
             return toFlip
