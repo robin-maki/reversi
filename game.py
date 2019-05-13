@@ -47,6 +47,7 @@ class Game:
         if len(toFlip) > 0:
             for f in toFlip:
                 self.gameBoard[f[0]][f[1]] = my
+            self.gameBoard[x][y] = my
             return toFlip
         else:
             raise ValueError('Invalid place')
