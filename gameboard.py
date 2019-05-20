@@ -11,8 +11,9 @@ BLACK = (0,0,0)
 game = Game.Game()
 
 def make_text(text,x, y):
+    backcolour = (141,125,99)
     font = pygame.font.Font('freesansbold.ttf', 25)
-    surf = font.render(text, True, BLACK, colour)
+    surf = font.render(text, True, BLACK, backcolour)
     gamepad.blit(surf, (x,y))
     return (x,y)
 
@@ -21,6 +22,7 @@ def make_text(text,x, y):
 def rungame():
     global gamepad
     global background,icon1,icon2,gameover #이미지
+    global mainbgm #소리
     global clock
     gamepad.blit(background,(0,0))
     crashed = False
@@ -54,6 +56,7 @@ def rungame():
                             gamepad.blit(icon1,(blockclass.board[clix][cliy].block_x,blockclass.board[clix][cliy].block_y))
                             point_player = point_player + len(toFlip_player)+1
                             point_com = point_com - len(toFlip_player)
+                            pygame.mixer.Sound.play(playerchange)
                     i = i + 1
 
                 elif i%2 == 1 and gamecontinue : # 컴퓨터 턴
@@ -67,7 +70,7 @@ def rungame():
                             gamepad.blit(icon2,(blockclass.board[clix][cliy].block_x,blockclass.board[clix][cliy].block_y))
                             point_player = point_player - len(toFlip_player)
                             point_com = point_com + len(toFlip_player)+1                    
-                    
+                            pygame.mixer.Sound.play(comchange)
                     i = i + 1
 
                 make_text(str(point_player),0,512)
@@ -89,6 +92,10 @@ def rungame():
 def initgame():
     global gamepad
     global clock,background,icon1,icon2,gameover
+    global mainbgm,playerchange,comchange
+
+    playerchange = pygame.mixer.Sound.load('playerchange.wmv')
+    comchange = pygame.mixer.Sound.load('comchange.wmv')
 
     pygame.init()
     gamepad = pygame.display.set_mode((window_width,window_height))
@@ -96,6 +103,12 @@ def initgame():
     icon1 = pygame.image.load('icon1.png')
     icon2 = pygame.image.load('icon2_2.png')
     gameover = pygame.image.load('gameover.png')
+
+    
+    mainbgm = pygame.mixer.music.load('mainbgm.mp3')
+    
+    pygame.mixer.music.load("mainbgm.mp3")
+    pygame.mixer.music.play(-1)
 
     pygame.display.set_caption('reversi')
 

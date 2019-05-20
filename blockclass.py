@@ -24,7 +24,15 @@ class gameblock :
     def getcol(self):
         return self.block_col
     
-  
+    def playplayersound(self):
+        global playerchange
+        playerchange = pygame.mixer.Sound.load('playerchange.wmv')
+        pygame.mixer.Sound.play(playerchange)
+        
+    def playcomsound(self):
+        global comchange
+        comchange = pygame.mixer.Sound.load('comchange.wmv')
+        pygame.mixer.Sound.play(comchange)
 
     
 
