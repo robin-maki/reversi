@@ -13,10 +13,8 @@ game = Game.Game()
 def make_text(text,x, y):
     font = pygame.font.Font('freesansbold.ttf', 25)
     surf = font.render(text, True, BLACK, colour)
-    rect = surf.get_rect()
-    rect.center = (x, y)
-    gamepad.blit(surf, rect)
-    return rect
+    gamepad.blit(surf, (x,y))
+    return (x,y)
 
 
 
@@ -72,12 +70,13 @@ def rungame():
                     
                     i = i + 1
 
-                       
+                make_text(str(point_player),0,512)
+                make_text(str(point_com),448,512)       
                        
                 if len(game.getPlaceable(1))==0 and len(game.getPlaceable(-1))==0 :
                     gamepad.blit(gameover, (0,32))
                     gamecontinue = False
-                    make_text('you '+str(point_player)+' vs '+' computer '+str(point_com),256, 128)
+                    make_text('you '+str(point_player)+' vs '+' computer '+str(point_com),128, 128)
                 print(len(game.getPlaceable(1)),len(game.getPlaceable(-1)))               
 
         pygame.display.update()
