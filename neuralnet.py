@@ -11,14 +11,13 @@ h = tf.reshape(
         tf.reshape(w, [64, 1])),
     [-1]
 )
-
+sess = tf.Session()
+sess.run(tf.global_variables_initializer())
 
 def run(gameBoard, weight):
     tensor = []
     for i in gameBoard:
         tensor.extend(i)
-    sess = tf.Session()
-    sess.run(tf.global_variables_initializer())
     res = sess.run(h, feed_dict={x: gameBoard, w: weight})
     return list(res)
 
