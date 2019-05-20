@@ -45,7 +45,7 @@ class Game:
     def place(self, x, y, my):
         toFlip = self.checkFlippable(x, y, my)
         if len(toFlip) > 0:
-            self.gameBoard[x][y] = my
+            toFlip.append((x, y))
             for f in toFlip:
                 self.gameBoard[f[0]][f[1]] = my
             return toFlip
@@ -57,5 +57,13 @@ class Game:
         potentialGame.place(x, y, my)
         return potentialGame.gameBoard
 
-
+    def getScore(self):
+        score = [0, 0]
+        for i in range(8):
+            for j in range(8):
+                if self.gameBoard[i][j] == 1:
+                    score[0] += 1
+                elif self.gameBoard[i][j] == -1:
+                    score[1] += 1
+        return score
 

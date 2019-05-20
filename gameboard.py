@@ -1,6 +1,6 @@
 import pygame
-import blockclass
-import Game
+import neuralnet
+import game
 blockimage = pygame.image.load('pad1.png')
 
 window_width = 512
@@ -8,7 +8,7 @@ window_height = 576
 colour = (255,255,255)
 BLACK = (0,0,0)
 
-game = Game.Game()
+game = game.Game()
 
 def make_text(text,x, y):
     backcolour = (141,125,99)
@@ -35,6 +35,8 @@ def rungame():
     gamepad.blit(icon2,(192,256))
     gamepad.blit(icon2,(256,192))
 
+    n = neuralnet.NeuralNet()
+
     while not crashed:
         for event in pygame.event.get():
 
@@ -45,15 +47,12 @@ def rungame():
                 clix = pos[0]//64
                 cliy = pos[1]//64
                 if i%2 == 0 and gamecontinue :#사용자 턴
-            
+
                     if game.gameBoard[clix][cliy] == 0 and len(game.checkFlippable(clix, cliy, -1)) > 0:
-    
                         toFlip_player = game.place(clix, cliy, -1)
-                        
                         if len(toFlip_player) > 0:
                             for f in toFlip_player:
-                                gamepad.blit(icon1,(blockclass.board[f[0]][f[1]].block_x,blockclass.board[f[0]][f[1]].block_y))
-                            gamepad.blit(icon1,(blockclass.board[clix][cliy].block_x,blockclass.board[clix][cliy].block_y))
+                                gamepad.blit(icon1, (f[0] * 64, f[1] * 64))
                             point_player = point_player + len(toFlip_player)+1
                             point_com = point_com - len(toFlip_player)
                             pygame.mixer.Sound.play(playerchange)
@@ -62,25 +61,25 @@ def rungame():
                 elif i%2 == 1 and gamecontinue : # 컴퓨터 턴
 
                     if game.gameBoard[clix][cliy] == 0 and len(game.checkFlippable(clix,cliy, 1)) > 0:
-                        
+
                         toFlip_com = game.place(clix, cliy, 1)
                         if len(toFlip_com) > 0:
                             for f in toFlip_com:
-                                gamepad.blit(icon2,(blockclass.board[f[0]][f[1]].block_x,blockclass.board[f[0]][f[1]].block_y))
-                            gamepad.blit(icon2,(blockclass.board[clix][cliy].block_x,blockclass.board[clix][cliy].block_y))
+                                gamepad.blit(icon2, (f[0] * 64, f[1] * 64))
+
                             point_player = point_player - len(toFlip_player)
                             point_com = point_com + len(toFlip_player)+1                    
                             pygame.mixer.Sound.play(comchange)
                     i = i + 1
 
                 make_text(str(point_player),0,512)
-                make_text(str(point_com),448,512)       
-                       
+                make_text(str(point_com),448,512)
+
                 if len(game.getPlaceable(1))==0 and len(game.getPlaceable(-1))==0 :
                     gamepad.blit(gameover, (0,32))
                     gamecontinue = False
                     make_text('you '+str(point_player)+' vs '+' computer '+str(point_com),128, 128)
-                print(len(game.getPlaceable(1)),len(game.getPlaceable(-1)))               
+                print(len(game.getPlaceable(1)),len(game.getPlaceable(-1)))
 
         pygame.display.update()
         clock.tick(30)
