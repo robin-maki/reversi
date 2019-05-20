@@ -55,7 +55,7 @@ def rungame():
                                 gamepad.blit(icon1, (f[0] * 64, f[1] * 64))
                             point_player = point_player + len(toFlip_player)+1
                             point_com = point_com - len(toFlip_player)
-                            pygame.mixer.Sound.play(playerchange)
+                            pygame.mixer.Sound(playerchange)
                     i = i + 1
 
                 elif i%2 == 1 and gamecontinue : # 컴퓨터 턴
@@ -69,7 +69,7 @@ def rungame():
 
                             point_player = point_player - len(toFlip_player)
                             point_com = point_com + len(toFlip_player)+1                    
-                            pygame.mixer.Sound.play(comchange)
+                            pygame.mixer.Sound(comchange)
                     i = i + 1
 
                 make_text(str(point_player),0,512)
