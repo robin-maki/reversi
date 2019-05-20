@@ -94,8 +94,8 @@ def initgame():
     global clock,background,icon1,icon2,gameover
     global mainbgm,playerchange,comchange
 
-    playerchange = pygame.mixer.Sound.load('playerchange.wmv')
-    comchange = pygame.mixer.Sound.load('comchange.wmv')
+    playerchange = pygame.mixer.Sound('playerchange.wmv')
+    comchange = pygame.mixer.Sound('comchange.wmv')
 
     pygame.init()
     gamepad = pygame.display.set_mode((window_width,window_height))
