@@ -11,9 +11,9 @@ pip install tensorflow pygame
 python gameboard.py
 ```
 ## 개발 현황
--[x] 오델로 핵심 알고리즘 구현
--[x] pygame을 이용한 그래픽 출력
--[x] 플레이어 vs 플레이어 구현
--[x] TensorFlow를 이용해 신경망 구현
--[ ] 유전 알고리즘을 통해 강화학습
--[ ] 프론트엔드와 연결해 플레이어 vs AI 구현
+- [x] 오델로 핵심 알고리즘 구현
+- [x] pygame을 이용한 그래픽 출력
+- [x] 플레이어 vs 플레이어 구현
+- [x] TensorFlow를 이용해 신경망 구현
+- [ ] 유전 알고리즘을 통해 강화학습
+- [ ] 프론트엔드와 연결해 플레이어 vs AI 구
