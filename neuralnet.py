@@ -23,6 +23,10 @@ def run(gameBoard, weight):
 
 class NeuralNet:
     def __init__(self, weight=None):
+        """
+        NeuralNet 클래스의 생성자
+        :param weight?: (List[64]) 생성될 NeuralNet 인스턴스의 가중치값. 입력하지 않으면 무작위로 생성된다.
+        """
         if weight is None:
             self.weight = []
             for i in range(64):
@@ -31,6 +35,12 @@ class NeuralNet:
             self.weight = weight[:]
 
     def predict(self, game, my):
+        """
+        자신의 가중치를 기반으로 신경망이 놓을 자리를 리턴한다.
+        :param game: (Game) 현재 진행중인 게임
+        :param my: (int) AI 자신의 색깔 (1/-1)
+        :return: (List[2]) AI가 선택한 돌을 놓을 위치 List [x, y]
+        """
         placeable = game.getPlaceable(my)
         if len(placeable) == 0:
             return None
