@@ -100,8 +100,8 @@ def initgame():
     icon1 = pygame.image.load('icon1.png')
     icon2 = pygame.image.load('icon2_2.png')
     gameover = pygame.image.load('gameover.png')
-    playerchange = pygame.mixer.Sound('playerchange.wmv')
-    comchange = pygame.mixer.Sound('comchange.wmv')
+    playerchange = pygame.mixer.Sound('playerchange.wav')
+    comchange = pygame.mixer.Sound('comchange.wav')
 
 
     
