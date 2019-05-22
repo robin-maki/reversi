@@ -53,8 +53,6 @@ def rungame():
                         if len(toFlip_player) > 0:
                             for f in toFlip_player:
                                 gamepad.blit(icon1, (f[0] * 64, f[1] * 64))
-                            point_player = point_player + len(toFlip_player)+1
-                            point_com = point_com - len(toFlip_player)
                             pygame.mixer.Sound(playerchange)
                     i = i + 1
 
@@ -66,19 +64,16 @@ def rungame():
                         if len(toFlip_com) > 0:
                             for f in toFlip_com:
                                 gamepad.blit(icon2, (f[0] * 64, f[1] * 64))
-
-                            point_player = point_player - len(toFlip_player)
-                            point_com = point_com + len(toFlip_player)+1                    
                             pygame.mixer.Sound(comchange)
                     i = i + 1
-
-                make_text(str(point_player),0,512)
-                make_text(str(point_com),448,512)
+                score = game.getScore()
+                make_text(str(score[1]),0,512)
+                make_text(str(score[0]),448,512)
 
                 if len(game.getPlaceable(1))==0 and len(game.getPlaceable(-1))==0 :
                     gamepad.blit(gameover, (0,32))
                     gamecontinue = False
-                    make_text('you '+str(point_player)+' vs '+' computer '+str(point_com),128, 128)
+                    make_text('you '+str(score[1])+' vs '+' computer '+str(score[0]),128, 128)
                 print(len(game.getPlaceable(1)),len(game.getPlaceable(-1)))
 
         pygame.display.update()
