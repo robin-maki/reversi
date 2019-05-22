@@ -28,8 +28,7 @@ def rungame():
     crashed = False
     i = 0
     gamecontinue = True
-    point_com = 2
-    point_player = 2
+    score = [2,2]
     gamepad.blit(icon1,(192,192))
     gamepad.blit(icon1,(256,256))
     gamepad.blit(icon2,(192,256))
@@ -46,35 +45,44 @@ def rungame():
                 pos = pygame.mouse.get_pos()
                 clix = pos[0]//64
                 cliy = pos[1]//64
-                if i%2 == 0 and gamecontinue :#사용자 턴
+        
 
-                    if game.gameBoard[clix][cliy] == 0 and len(game.checkFlippable(clix, cliy, -1)) > 0:
-                        toFlip_player = game.place(clix, cliy, -1)
-                        if len(toFlip_player) > 0:
-                            for f in toFlip_player:
-                                gamepad.blit(icon1, (f[0] * 64, f[1] * 64))
-                            pygame.mixer.Sound(playerchange)
-                    i = i + 1
+                if game.gameBoard[clix][cliy] == 0 and len(game.checkFlippable(clix, cliy, -1)) > 0:
+                    toFlip_player = game.place(clix, cliy, -1)
+                    if len(toFlip_player) > 0:
+                        for f in toFlip_player:
+                            gamepad.blit(icon1, (f[0] * 64, f[1] * 64))
+                        pygame.mixer.Sound(playerchange)
+                    score[0] = score[0] + len(toFlip_player)
+                    score[1] = score[1] - len(toFlip_player)+1
+                    
+                               
+                    cb = n.predict(game,1)
+                    print(cb)
+                    print(bool(cb))
+                    
+                if (bool(cb) == True) and game.gameBoard[cb[0]][cb[1]] == 0:
 
-                elif i%2 == 1 and gamecontinue : # 컴퓨터 턴
+                    toFlip_com = game.place(cb[0], cb[1], 1)
+                    if len(toFlip_com) > 0:
+                        for f in toFlip_com:
+                            gamepad.blit(icon2, (f[0] * 64, f[1] * 64))
+                        pygame.mixer.Sound(comchange)
 
-                    if game.gameBoard[clix][cliy] == 0 and len(game.checkFlippable(clix,cliy, 1)) > 0:
-
-                        toFlip_com = game.place(clix, cliy, 1)
-                        if len(toFlip_com) > 0:
-                            for f in toFlip_com:
-                                gamepad.blit(icon2, (f[0] * 64, f[1] * 64))
-                            pygame.mixer.Sound(comchange)
-                    i = i + 1
-                score = game.getScore()
-                make_text(str(score[1]),0,512)
-                make_text(str(score[0]),448,512)
+                        
+                    score[0] = score[0] - len(toFlip_com)+1
+                    score[1] = score[1] + len(toFlip_com) 
+                    
+        
+                
+                make_text(str(score[0]),0,512)
+                make_text(str(score[1]),448,512)
 
                 if len(game.getPlaceable(1))==0 and len(game.getPlaceable(-1))==0 :
                     gamepad.blit(gameover, (0,32))
                     gamecontinue = False
-                    make_text('you '+str(score[1])+' vs '+' computer '+str(score[0]),128, 128)
-                print(len(game.getPlaceable(1)),len(game.getPlaceable(-1)))
+                    make_text('you '+str(score[0])+' vs '+' computer '+str(score[1]),128, 128)
+                
 
         pygame.display.update()
         clock.tick(30)
