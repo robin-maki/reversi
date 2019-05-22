@@ -1,6 +1,7 @@
 import pygame
 import neuralnet
 import game
+import time
 blockimage = pygame.image.load('pad1.png')
 
 window_width = 512
@@ -52,7 +53,7 @@ def rungame():
                     if len(toFlip_player) > 0:
                         for f in toFlip_player:
                             gamepad.blit(icon1, (f[0] * 64, f[1] * 64))
-                        pygame.mixer.Sound(playerchange)
+                        pygame.mixer.Sound.play(playerchange)
                     score[0] = score[0] + len(toFlip_player)
                     score[1] = score[1] - len(toFlip_player)+1
                     
@@ -62,12 +63,11 @@ def rungame():
                     print(bool(cb))
                     
                 if (bool(cb) == True) and game.gameBoard[cb[0]][cb[1]] == 0:
-
                     toFlip_com = game.place(cb[0], cb[1], 1)
                     if len(toFlip_com) > 0:
                         for f in toFlip_com:
                             gamepad.blit(icon2, (f[0] * 64, f[1] * 64))
-                        pygame.mixer.Sound(comchange)
+                        pygame.mixer.Sound.play(comchange)
 
                         
                     score[0] = score[0] - len(toFlip_com)+1
