@@ -93,15 +93,16 @@ def initgame():
     global clock,background,icon1,icon2,gameover
     global mainbgm,playerchange,comchange
 
-    playerchange = pygame.mixer.Sound('playerchange.wmv')
-    comchange = pygame.mixer.Sound('comchange.wmv')
-
+    
     pygame.init()
     gamepad = pygame.display.set_mode((window_width,window_height))
     background = pygame.image.load('pad1.png')
     icon1 = pygame.image.load('icon1.png')
     icon2 = pygame.image.load('icon2_2.png')
     gameover = pygame.image.load('gameover.png')
+    playerchange = pygame.mixer.Sound('playerchange.wmv')
+    comchange = pygame.mixer.Sound('comchange.wmv')
+
 
     
     mainbgm = pygame.mixer.music.load('mainbgm.mp3')
