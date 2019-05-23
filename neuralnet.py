@@ -1,6 +1,7 @@
 import random
 import tensorflow as tf
 import game
+import math
 
 x = tf.placeholder(tf.float32, [None, 8, 8])
 w = tf.placeholder(tf.float32, [64])
@@ -68,6 +69,10 @@ class NeuralNet:
             if 0.495 < position < 0.505:  # 변이 확률 (1%)
                 weight.append(random.random())
             else:
+                if position < 0.5:
+                    position = position ** 2
+                else:
+                    position = math.sqrt(position)
                 weight.append(self.weight[i] * position + opponent.weight[i] * (1 - position))
         return NeuralNet(weight)
 
