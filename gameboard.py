@@ -23,19 +23,19 @@ BLACK = (0,0,0)
 game = game.Game()
 
 def showcurrentscore(player,com):
-    make_text('.   ',0,512)
-    make_text(str(player),0,512)
-    make_text('.   ',448,512)
-    make_text(str(com),448,512)
+    make_text('|    |',7,515)
+    make_text(str(player),22,515)
+    make_text('|    |',455,515)
+    make_text(str(com),470,515)
     pygame.display.update()
 
 def make_text(text,x, y):
 
-    backcolour = (141,125,99)
+    backcolour = (64,42,19)
 
     font = pygame.font.Font('freesansbold.ttf', 25)
 
-    surf = font.render(text, True, BLACK, backcolour)
+    surf = font.render(text, True, colour,backcolour)
 
     gamepad.blit(surf, (x,y))
 
@@ -125,7 +125,7 @@ def rungame():
 
                     
                     if (bool(cb) == True) and game.gameBoard[cb[0]][cb[1]] == 0:
-                        make_text('computer turn',128, 512)
+                        make_text('computer turn ',150, 515)
                         pygame.display.update()
                         time.sleep(random.random()+0.5)
                         toFlip_com = game.place(cb[0], cb[1], 1)
@@ -145,11 +145,11 @@ def rungame():
 
                         showcurrentscore(score[0],score[1])
 
-                        make_text('It is your turn !',128, 512)
+                        make_text('It is your turn !',150, 515)
 
                     
             if len(game.getPlaceable(-1))==0:
-                make_text('computer turn',128, 512)
+                make_text('computer turn ',150, 515)
                 pygame.display.update() 
                 cb = n.predict(game,1)
 
@@ -174,7 +174,7 @@ def rungame():
                         score[1] = score[1] + len(toFlip_com) 
 
                         showcurrentscore(score[0],score[1])
-                    make_text('It is your turn !',128, 512)
+                    make_text('It is your turn !',150, 515)
         
 
 
@@ -187,7 +187,12 @@ def rungame():
 
             gamecontinue = False
 
-            make_text('you '+str(score[0])+' vs '+' computer '+str(score[1]),128, 128)
+            if score[0]>score[1]:
+                make_text('    YOU WIN !    ',128, 515)
+            elif score[0]<score[1]:
+                make_text('    YOU Lose TT    ',128, 515)
+            else:
+                make_text('    Draw    ',128,515)
 
                 
 
