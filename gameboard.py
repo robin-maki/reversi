@@ -5,7 +5,7 @@ import neuralnet
 import game
 
 import time
-
+import learn
 blockimage = pygame.image.load('pad1.png')
 
 
@@ -70,9 +70,8 @@ def rungame():
 
     gamepad.blit(icon2,(256,192))
 
-
-
-    n = neuralnet.NeuralNet()
+    learn.init()
+    n = learn.learningList[0]
 
 
 
@@ -114,18 +113,35 @@ def rungame():
 
                     score[1] = score[1] - len(toFlip_player)+1
 
-                    
-
-                               
-
+            
                     cb = n.predict(game,1)
 
-                    print(cb)
-
-                    print(bool(cb))
+                    time.sleep(1)
 
                     
+                    if (bool(cb) == True) and game.gameBoard[cb[0]][cb[1]] == 0:
 
+                        toFlip_com = game.place(cb[0], cb[1], 1)
+
+                        if len(toFlip_com) > 0:
+
+                            for f in toFlip_com:
+
+                                gamepad.blit(icon2, (f[0] * 64, f[1] * 64))
+
+                            pygame.mixer.Sound.play(comchange)
+
+
+                        score[0] = score[0] - len(toFlip_com)+1
+
+                        score[1] = score[1] + len(toFlip_com) 
+
+                    
+            if len(game.getPlaceable(-1))==0:
+                
+                cb = n.predict(game,1)
+
+                    
                 if (bool(cb) == True) and game.gameBoard[cb[0]][cb[1]] == 0:
 
                     toFlip_com = game.place(cb[0], cb[1], 1)
@@ -139,32 +155,23 @@ def rungame():
                         pygame.mixer.Sound.play(comchange)
 
 
+                        score[0] = score[0] - len(toFlip_com)+1
 
-                        
-
-                    score[0] = score[0] - len(toFlip_com)+1
-
-                    score[1] = score[1] + len(toFlip_com) 
-
-                    
-
+                        score[1] = score[1] + len(toFlip_com) 
         
+        make_text(str(score[0]),0,512)
 
-                
-
-                make_text(str(score[0]),0,512)
-
-                make_text(str(score[1]),448,512)
+        make_text(str(score[1]),448,512)
 
 
 
-                if len(game.getPlaceable(1))==0 and len(game.getPlaceable(-1))==0 :
+        if len(game.getPlaceable(1))==0 and len(game.getPlaceable(-1))==0 :
 
-                    gamepad.blit(gameover, (0,32))
+            gamepad.blit(gameover, (0,32))
 
-                    gamecontinue = False
+            gamecontinue = False
 
-                    make_text('you '+str(score[0])+' vs '+' computer '+str(score[1]),128, 128)
+            make_text('you '+str(score[0])+' vs '+' computer '+str(score[1]),128, 128)
 
                 
 
