@@ -99,7 +99,7 @@ def rungame():
                 cliy = pos[1]//64
 
         
-                if game.gameBoard[clix][cliy] == 0 and len(game.checkFlippable(clix, cliy, -1)) > 0:
+                if (i%2==0) and game.gameBoard[clix][cliy] == 0 and len(game.checkFlippable(clix, cliy, -1)) > 0:
 
                     toFlip_player = game.place(clix, cliy, -1)
 
@@ -117,9 +117,19 @@ def rungame():
                     score[1] = score[1] - len(toFlip_player)+1
 
                     showcurrentscore(score[0],score[1])
-
+                    i = i + 1
             
                     cb = n.predict(game,1)
+
+                    if (gamecontinue == True) and bool(cb)==False:  # 컴퓨터 둘 때 없을시 메세지 출력'''
+                        make_text("COM haven't !!",150, 515)
+                        pygame.display.update()
+                        time.sleep(0.5)
+                
+                        make_text('It is your turn !',150, 515)
+                        pygame.display.update()
+
+                        i = i + 1
 
                     
 
@@ -147,11 +157,20 @@ def rungame():
 
                         make_text('It is your turn !',150, 515)
 
+                        i = i + 1
+
+                        
+
                     
-            if len(game.getPlaceable(-1))==0:
+            if (gamecontinue == True) and len(game.getPlaceable(-1))==0:
+                make_text('UR unavailable',150, 515)
+                pygame.display.update()
+                time.sleep(0.5)
+                
                 make_text('computer turn ',150, 515)
                 pygame.display.update() 
                 cb = n.predict(game,1)
+                i = i + 1
 
                     
                 if (bool(cb) == True) and game.gameBoard[cb[0]][cb[1]] == 0:
@@ -174,9 +193,11 @@ def rungame():
                         score[1] = score[1] + len(toFlip_com) 
 
                         showcurrentscore(score[0],score[1])
+                        i = i + 1
                     make_text('It is your turn !',150, 515)
         
-
+             
+                
 
 
         if len(game.getPlaceable(1))==0 and len(game.getPlaceable(-1))==0 :
@@ -188,11 +209,11 @@ def rungame():
             gamecontinue = False
 
             if score[0]>score[1]:
-                make_text('    YOU WIN !    ',128, 515)
+                make_text('.        YOU WIN !        .',128, 515)
             elif score[0]<score[1]:
-                make_text('    YOU Lose TT    ',128, 515)
+                make_text('.        YOU Lose TT         .',128, 515)
             else:
-                make_text('    Draw    ',128,515)
+                make_text('.                Draw               .',128,515)
 
                 
 
