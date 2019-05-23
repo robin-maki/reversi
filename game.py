@@ -1,4 +1,5 @@
 import copy
+import time
 
 DIRECTION = ((-1, -1), (-1, 0), (-1, 1), (0, -1), (0, 1), (1, -1), (1, 0), (1, 1))
 
@@ -71,7 +72,10 @@ class Game:
             toFlip.append((x, y))
             for f in toFlip:
                 self.gameBoard[f[0]][f[1]] = my
+            
+        
             return toFlip
+        
         else:
             raise ValueError('Invalid place')
 

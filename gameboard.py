@@ -4,7 +4,7 @@ import neuralnet
 
 import game
 
-import time
+import time,random
 import learn
 blockimage = pygame.image.load('pad1.png')
 
@@ -22,7 +22,12 @@ BLACK = (0,0,0)
 
 game = game.Game()
 
-
+def showcurrentscore(player,com):
+    make_text('.   ',0,512)
+    make_text(str(player),0,512)
+    make_text('.   ',448,512)
+    make_text(str(com),448,512)
+    pygame.display.update()
 
 def make_text(text,x, y):
 
@@ -85,7 +90,7 @@ def rungame():
 
                 crashed = True
 
-            if event.type == pygame.MOUSEBUTTONUP:
+            if event.type == pygame.MOUSEBUTTONUP and gamecontinue:
 
                 pos = pygame.mouse.get_pos()
 
@@ -94,9 +99,6 @@ def rungame():
                 cliy = pos[1]//64
 
         
-
-
-
                 if game.gameBoard[clix][cliy] == 0 and len(game.checkFlippable(clix, cliy, -1)) > 0:
 
                     toFlip_player = game.place(clix, cliy, -1)
@@ -106,25 +108,30 @@ def rungame():
                         for f in toFlip_player:
 
                             gamepad.blit(icon1, (f[0] * 64, f[1] * 64))
-
+                        
+                        
                         pygame.mixer.Sound.play(playerchange)
 
                     score[0] = score[0] + len(toFlip_player)
 
                     score[1] = score[1] - len(toFlip_player)+1
 
+                    showcurrentscore(score[0],score[1])
+
             
                     cb = n.predict(game,1)
 
-                    time.sleep(1)
+                    
 
                     
                     if (bool(cb) == True) and game.gameBoard[cb[0]][cb[1]] == 0:
-
+                        make_text('computer turn',128, 512)
+                        pygame.display.update()
+                        time.sleep(random.random()+0.5)
                         toFlip_com = game.place(cb[0], cb[1], 1)
-
                         if len(toFlip_com) > 0:
 
+                            
                             for f in toFlip_com:
 
                                 gamepad.blit(icon2, (f[0] * 64, f[1] * 64))
@@ -136,13 +143,20 @@ def rungame():
 
                         score[1] = score[1] + len(toFlip_com) 
 
+                        showcurrentscore(score[0],score[1])
+
+                        make_text('It is your turn !',128, 512)
+
                     
             if len(game.getPlaceable(-1))==0:
-                
+                make_text('computer turn',128, 512)
+                pygame.display.update() 
                 cb = n.predict(game,1)
 
                     
                 if (bool(cb) == True) and game.gameBoard[cb[0]][cb[1]] == 0:
+
+                    time.sleep(random.random()+0.5)
 
                     toFlip_com = game.place(cb[0], cb[1], 1)
 
@@ -158,15 +172,17 @@ def rungame():
                         score[0] = score[0] - len(toFlip_com)+1
 
                         score[1] = score[1] + len(toFlip_com) 
-        
-        make_text(str(score[0]),0,512)
 
-        make_text(str(score[1]),448,512)
+                        showcurrentscore(score[0],score[1])
+                    make_text('It is your turn !',128, 512)
+        
 
 
 
         if len(game.getPlaceable(1))==0 and len(game.getPlaceable(-1))==0 :
 
+            
+            
             gamepad.blit(gameover, (0,32))
 
             gamecontinue = False
