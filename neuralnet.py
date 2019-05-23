@@ -14,12 +14,14 @@ h = tf.reshape(
 sess = tf.Session()
 sess.run(tf.global_variables_initializer())
 
+
 def run(gameBoard, weight):
     tensor = []
     for i in gameBoard:
         tensor.extend(i)
     res = sess.run(h, feed_dict={x: gameBoard, w: weight})
     return list(res)
+
 
 class NeuralNet:
     def __init__(self, weight=None):
@@ -53,6 +55,21 @@ class NeuralNet:
         else:
             most = value.index(min(value))
         return placeable[most]
+
+    def gen(self, opponent):
+        """
+        자신과 인수로 받은 신경망의 자손을 생성합니다.
+        :param opponent: (NeuralNet) 다른 부모 신경망
+        :return: (NeuralNet) 자손 신경망
+        """
+        weight = []
+        for i in range(64):
+            position = random.random()
+            if 0.49 < position < 0.51:  # 변이 확률 (2%)
+                weight.append(random.random())
+            else:
+                weight.append(self.weight * position + opponent.weight * (1 - position))
+        return NeuralNet(weight)
 
 
 n = NeuralNet()
