@@ -65,7 +65,7 @@ class NeuralNet:
         weight = []
         for i in range(64):
             position = random.random()
-            if 0.49 < position < 0.51:  # 변이 확률 (2%)
+            if 0.495 < position < 0.505:  # 변이 확률 (1%)
                 weight.append(random.random())
             else:
                 weight.append(self.weight[i] * position + opponent.weight[i] * (1 - position))
