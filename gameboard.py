@@ -2,6 +2,7 @@ import pygame
 import neuralnet
 import game
 import time
+import learn
 blockimage = pygame.image.load('pad1.png')
 
 window_width = 512
@@ -35,7 +36,8 @@ def rungame():
     gamepad.blit(icon2,(192,256))
     gamepad.blit(icon2,(256,192))
 
-    n = neuralnet.NeuralNet()
+    learn.init()
+    n = learn.learningList[0]
 
     while not crashed:
         for event in pygame.event.get():
