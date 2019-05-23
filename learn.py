@@ -2,7 +2,9 @@ import neuralnet
 import game
 
 LEARNING_COUNT = 12
-WIN_COUNT = 4
+WIN_COUNT = 8
+
+assert WIN_COUNT * (WIN_COUNT - 1) / 2 <= LEARNING_COUNT, '생존 신경망이 너무 많다!!'
 
 learningList = []
 leagueNum = 0
@@ -13,6 +15,8 @@ def init():
 
 def league():
     print('[League {}] Start!'.format(leagueNum))
+    for i in range(LEARNING_COUNT):
+        learningList[i].winScore = 0
     for i in range(LEARNING_COUNT):
         for j in range(i + 1, LEARNING_COUNT):
             leagueGame = game.Game()
@@ -43,7 +47,14 @@ def league():
                                 print('0', end='')
                         print('')
                     break
-
+    learningList.sort(key=lambda nn: nn.winScore, reverse=True)
+    newLearningList = []
+    for i in range(WIN_COUNT):
+        for j in range(i + 1, WIN_COUNT):
+            newLearningList.append(learningList[i].gen(learningList[j]))
+    while len(newLearningList) < LEARNING_COUNT:
+        newLearningList.append(neuralnet.NeuralNet())
+    globals().learningList = newLearningList
 
 
 init()
