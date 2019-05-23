@@ -1,3 +1,5 @@
-import Game as g
-import NeuralNet as nn
+import learn
 
+learn.init()
+for i in range(100):
+    learn.league()
