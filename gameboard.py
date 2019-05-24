@@ -130,7 +130,7 @@ def rungame():
             
                     cb = n.predict(game,1)
 
-                    if (gamecontinue == True) and bool(cb)==False :  # 컴퓨터 둘 때 없을시 메세지 출력'''
+                    if (gamecontinue == True) and bool(cb)==False and len(game.getPlaceable(-1))!=0 :  # 컴퓨터 둘 때 없을시 메세지 출력'''
                         patch_m=pygame.transform.scale(patch,(300,36))
                         gamepad.blit(patch_m,(150,515))
                         make_text("COM haven't !!",150, 515)
