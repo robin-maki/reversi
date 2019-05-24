@@ -1,14 +1,10 @@
 import pygame
-
 import neuralnet
-
 import game
-
 import time,random
 import learn
+
 blockimage = pygame.image.load('pad1.png')
-
-
 
 window_width = 512
 
@@ -162,7 +158,7 @@ def rungame():
                         
 
                     
-            if (gamecontinue == True) and len(game.getPlaceable(-1))==0:
+            if (gamecontinue == True) and len(game.getPlaceable(-1))==0 and len(game.getPlaceable(1)!=0):
                 make_text('UR unavailable',150, 515)
                 pygame.display.update()
                 time.sleep(0.5)
@@ -228,11 +224,6 @@ def rungame():
 
 
 
-
-
-
-
-
 def initgame():
 
     global gamepad
@@ -242,8 +233,6 @@ def initgame():
     global mainbgm,playerchange,comchange
 
 
-
-    
 
     pygame.init()
 
@@ -261,47 +250,15 @@ def initgame():
 
     comchange = pygame.mixer.Sound('comchange.wav')
 
-
-
-
-
-    
-
     mainbgm = pygame.mixer.music.load('mainbgm.mp3')
-
-    
 
     pygame.mixer.music.load("mainbgm.mp3")
 
     pygame.mixer.music.play(-1)
 
-
-
     pygame.display.set_caption('reversi')
 
-
-
     clock = pygame.time.Clock()
-
-
-
-   
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
     rungame()
 
