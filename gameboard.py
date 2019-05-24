@@ -158,7 +158,7 @@ def rungame():
                         
 
                     
-            if (gamecontinue == True) and len(game.getPlaceable(-1))==0 and len(game.getPlaceable(1)!=0):
+            if (gamecontinue == True) and len(game.getPlaceable(-1))==0 and len(game.getPlaceable(1))!=0:
                 make_text('UR unavailable',150, 515)
                 pygame.display.update()
                 time.sleep(0.5)
