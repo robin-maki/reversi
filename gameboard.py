@@ -19,12 +19,25 @@ BLACK = (0,0,0)
 game = game.Game()
 
 def showcurrentscore(player,com):
-    make_text('|    |',7,515)
+    global patch
+    patch_s=pygame.transform.scale(patch,(70,36))
+    gamepad.blit(patch_s,(22,515))
+    gamepad.blit(patch_s,(470,515))
     make_text(str(player),22,515)
-    make_text('|    |',455,515)
     make_text(str(com),470,515)
     pygame.display.update()
 
+def showmyturn():
+    patch_m=pygame.transform.scale(patch,(300,36))
+    gamepad.blit(patch_m,(150,515))
+    make_text('It is your turn !',150, 515)
+    pygame.display.update()
+
+def showcomturn():
+    patch_m=pygame.transform.scale(patch,(300,36))
+    gamepad.blit(patch_m,(150,515))
+    make_text('computer turn',150, 515)
+    pygame.display.update()
 def make_text(text,x, y):
 
     backcolour = (64,42,19)
@@ -47,7 +60,7 @@ def rungame():
 
     global gamepad
 
-    global background,icon1,icon2,gameover #이미지
+    global background,icon1,icon2,gameover,patch #이미지
 
     global mainbgm #소리
 
@@ -117,22 +130,22 @@ def rungame():
             
                     cb = n.predict(game,1)
 
-                    if (gamecontinue == True) and bool(cb)==False:  # 컴퓨터 둘 때 없을시 메세지 출력'''
+                    if (gamecontinue == True) and bool(cb)==False :  # 컴퓨터 둘 때 없을시 메세지 출력'''
+                        patch_m=pygame.transform.scale(patch,(300,36))
+                        gamepad.blit(patch_m,(150,515))
                         make_text("COM haven't !!",150, 515)
                         pygame.display.update()
                         time.sleep(0.5)
-                
-                        make_text('It is your turn !',150, 515)
-                        pygame.display.update()
+
+                        showmyturn()
 
                         i = i + 1
 
                     
 
                     
-                    if (bool(cb) == True) and game.gameBoard[cb[0]][cb[1]] == 0:
-                        make_text('computer turn ',150, 515)
-                        pygame.display.update()
+                    if (bool(cb) == True) and game.gameBoard[cb[0]][cb[1]] == 0 and len(game.getPlaceable(-1))!=0:
+                        showcomturn()
                         time.sleep(random.random()+0.5)
                         toFlip_com = game.place(cb[0], cb[1], 1)
                         if len(toFlip_com) > 0:
@@ -151,7 +164,7 @@ def rungame():
 
                         showcurrentscore(score[0],score[1])
 
-                        make_text('It is your turn !',150, 515)
+                        showmyturn()
 
                         i = i + 1
 
@@ -159,12 +172,13 @@ def rungame():
 
                     
             if (gamecontinue == True) and len(game.getPlaceable(-1))==0 and len(game.getPlaceable(1))!=0:
+                patch_m=pygame.transform.scale(patch,(300,36))
+                gamepad.blit(patch_m,(150,515))
                 make_text('UR unavailable',150, 515)
                 pygame.display.update()
                 time.sleep(0.5)
                 
-                make_text('computer turn ',150, 515)
-                pygame.display.update() 
+                showcomturn() 
                 cb = n.predict(game,1)
                 i = i + 1
 
@@ -190,7 +204,7 @@ def rungame():
 
                         showcurrentscore(score[0],score[1])
                         i = i + 1
-                    make_text('It is your turn !',150, 515)
+                    showmyturn()
         
              
                 
@@ -198,8 +212,6 @@ def rungame():
 
         if len(game.getPlaceable(1))==0 and len(game.getPlaceable(-1))==0 :
 
-            
-            
             gamepad.blit(gameover, (0,32))
 
             gamecontinue = False
@@ -210,8 +222,6 @@ def rungame():
                 make_text('.        YOU Lose TT         .',128, 515)
             else:
                 make_text('.                Draw               .',128,515)
-
-                
 
 
 
@@ -228,7 +238,7 @@ def initgame():
 
     global gamepad
 
-    global clock,background,icon1,icon2,gameover
+    global clock,background,icon1,icon2,gameover,patch
 
     global mainbgm,playerchange,comchange
 
@@ -245,6 +255,8 @@ def initgame():
     icon2 = pygame.image.load('icon2_2.png')
 
     gameover = pygame.image.load('gameover.png')
+
+    patch = pygame.image.load('patch.png')
 
     playerchange = pygame.mixer.Sound('playerchange.wav')
 
