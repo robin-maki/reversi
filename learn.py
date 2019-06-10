@@ -2,15 +2,20 @@ import neuralnet
 import game
 import json
 
-LEARNING_COUNT = 12
-WIN_COUNT = 4
+LEARNING_COUNT = 12  # 한번에 학습할 신경망의 수
+WIN_COUNT = 4   # 한 게임에 살아남는 신경망의 수
 
 assert WIN_COUNT * (WIN_COUNT - 1) / 2 <= LEARNING_COUNT, '생존 신경망이 너무 많다!!'
+# 생존 신경망의 자손만으로 신경망 최대 수를 넘을 수 있다면 에러를 발생시킴
 
 learningList = []
 leagueNum = 0
 
+
 def init():
+    """
+    이미 학습된 데이터가 있다면 불러오고 없으면 새로운 학습 데이터를 만든다.
+    """
     from pathlib import Path
     if Path('learn.json').is_file():
         print('File exists')
@@ -21,7 +26,11 @@ def init():
             learningList.append(neuralnet.NeuralNet())
         save()
 
+
 def save():
+    """
+    지금까지의 학습 데이터를 파일에 저장한다.
+    """
     with open('learn.json', 'w') as jsonFile:
         weights = []
         for l in learningList:
@@ -29,7 +38,11 @@ def save():
         jsonFile.write(json.dumps(weights))
         jsonFile.close()
 
+
 def load():
+    """
+    파일에 저장된 학습 데이터를 불러온다.
+    """
     with open('learn.json', 'r') as jsonFile:
         global learningList
         loadList = []
@@ -38,7 +51,13 @@ def load():
         learningList = loadList
         jsonFile.close()
 
+
 def league():
+    """
+    현재 존재하는 신경망들끼리 리그 게임을 진행한 후,
+    승률이 높은 신경망들만 살리고 각각 신경망들의 자손을 만든다.
+    남은 자리는 다시 랜덤 신경망으로 채운다.
+    """
     global learningList, leagueNum
     leagueNum += 1
     winlose = 0
