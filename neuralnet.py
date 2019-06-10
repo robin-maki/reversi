@@ -75,8 +75,3 @@ class NeuralNet:
                     position = math.sqrt(position)
                 weight.append(self.weight[i] * position + opponent.weight[i] * (1 - position))
         return NeuralNet(weight)
-
-
-n = NeuralNet()
-g = game.Game()
-print(n.predict(g, 1))
