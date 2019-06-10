@@ -1,5 +1,6 @@
 import learn
 
 learn.init()
-for i in range(100):
+while 1:
     learn.league()
+
