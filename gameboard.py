@@ -72,7 +72,7 @@ def rungame():
 
     global gamepad
 
-    global background,icon1,icon2,gameover,patch #이미지
+    global background,icon1,icon2,gameover,patch,play #이미지
 
     global mainbgm #소리
 
@@ -95,6 +95,8 @@ def rungame():
     gamepad.blit(icon2,(192,256))
 
     gamepad.blit(icon2,(256,192))
+
+    gamepad.blit(play,(240,556))
 
     learn.init()
     n = learn.learningList[0]
@@ -121,6 +123,14 @@ def rungame():
                 clix = pos[0]//64
 
                 cliy = pos[1]//64
+
+                if cliy>7:
+                    if pos[0]>=240 and pos[0]<=272 and pos[1]>556:
+                        pygame.mixer.music.stop()
+                    
+                    clix = 4
+                    cliy = 4
+
 
         
                 if (i%2==0) and game.gameBoard[clix][cliy] == 0 and len(game.checkFlippable(clix, cliy, -1)) > 0:
@@ -279,7 +289,7 @@ def initgame():
 
     global gamepad
 
-    global clock,background,icon1,icon2,gameover,patch#이미지
+    global clock,background,icon1,icon2,gameover,patch,play#이미지
 
     global mainbgm,playerchange,comchange #소리
 
@@ -294,12 +304,12 @@ def initgame():
     icon2 = pygame.image.load('icon2_2.png')
     gameover = pygame.image.load('gameover.png')
     patch = pygame.image.load('patch.png')
+    play = pygame.image.load('play.png')
 
     playerchange = pygame.mixer.Sound('playerchange.wav')
     comchange = pygame.mixer.Sound('comchange.wav')
     mainbgm = pygame.mixer.music.load('mainbgm.mp3')
 
-    pygame.mixer.music.load("mainbgm.mp3")
     pygame.mixer.music.play(-1)
 
     pygame.display.set_caption('reversi')
